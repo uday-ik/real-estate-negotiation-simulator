@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════════════
-# Real Estate Negotiation Workshop — Python Dependencies
+# Real Estate Negotiation Simulator — Python Dependencies
 # ═══════════════════════════════════════════════════════════════════════
 #
 # INSTALL:
@@ -13,7 +13,7 @@
 #   • npx (comes with Node.js)
 #   • MCP Inspector (optional — visual host GUI for browsing a server's
 #     tools/resources/prompts). Runs via npx, no install needed:
-#       npx @modelcontextprotocol/inspector python m1_mcp/inventory_server.py
+#       npx @modelcontextprotocol/inspector python d1_mcp/inventory_server.py
 #
 # API KEYS NEEDED:
 #   Simple version: export OPENAI_API_KEY=sk-...
@@ -23,8 +23,14 @@
 
 
 # ── MCP (Model Context Protocol) ────────────────────────────────────────────
-# Core MCP library — client and server (FastMCP included)
-mcp>=1.0.0
+# Core MCP library — client and server (FastMCP included).
+#
+# PINNED BELOW 2.0 ON PURPOSE. mcp 2.x renamed FastMCP to MCPServer and moved
+# mcp.shared.session, which breaks every server in d1_mcp/ AND breaks
+# google-adk's MCPToolset — ADK itself declares mcp>=1.24,<2. An unpinned
+# `mcp>=1.0.0` resolves to 2.x today and the very first demo fails with
+# "Server closed stdout". Do not relax this until google-adk supports mcp 2.x.
+mcp>=1.24,<2
 
 
 # ── LLM Providers ────────────────────────────────────────────────────────────
@@ -68,7 +74,7 @@ typing-extensions>=4.0.0
 
 # ── Dashboard ────────────────────────────────────────────────────────────────
 
-# Streamlit — negotiation dashboard UI (Module 2)
+# Streamlit — negotiation dashboard UI (Demo 2)
 streamlit>=1.35.0
 
 # pandas — data manipulation for the dashboard chart

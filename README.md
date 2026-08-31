@@ -1,7 +1,13 @@
-# Real Estate Negotiation Workshop
-## Learn MCP · A2A · Google ADK
+# Real Estate Negotiation Simulator
+## MCP · Google ADK · A2A
 
-A **4-hour hands-on workshop** teaching modern AI agent frameworks through a concrete, runnable project: an autonomous real estate negotiation between a Buyer Agent and a Seller Agent.
+A hands-on project for learning modern AI agent frameworks: an autonomous real estate
+negotiation between a Buyer Agent and a Seller Agent, built up protocol by protocol.
+
+**New here? Start with [`SETUP.md`](SETUP.md)** — the short, verified path to a running
+demo. This file is the fuller reference: what every folder holds, how each module runs,
+and the architecture behind it. Teaching from it? See
+[`INSTRUCTOR_GUIDE.md`](INSTRUCTOR_GUIDE.md).
 
 ---
 
@@ -10,8 +16,8 @@ A **4-hour hands-on workshop** teaching modern AI agent frameworks through a con
 | Concept | What It Is | How We Use It |
 |---|---|---|
 | **MCP** | Standard protocol for agents to access external tools | Agents query pricing/inventory servers via MCP |
-| **A2A** | Agent-to-Agent protocol (Agent Card discovery + JSON-RPC over HTTP, task lifecycle, streaming) | Module 2 uses the true networked A2A protocol via `a2a-sdk` |
-| **Google ADK** | Production-grade agent framework (LlmAgent, workflow agents, sessions, MCPToolset, callbacks) | Module 2 builds the buyer and seller agents with ADK |
+| **A2A** | Agent-to-Agent protocol (Agent Card discovery + JSON-RPC over HTTP, task lifecycle, streaming) | Demo 2 uses the true networked A2A protocol via `a2a-sdk` |
+| **Google ADK** | Production-grade agent framework (LlmAgent, workflow agents, sessions, MCPToolset, callbacks) | Demo 2 builds the buyer and seller agents with ADK |
 
 ---
 
@@ -36,19 +42,19 @@ Folders are numbered in teaching order. Each module introduces one new concept.
 ```
 real-estate-negotiation-simulator/
 │
-├── m1_mcp/                            # MODULE 1 — External data via MCP
+├── d1_mcp/                            # DEMO 1 — External data via MCP
 │   ├── README.md                      # Module guide for learners
 │   ├── github_agent_client.py         # LLM agent that calls GitHub tools via MCP
 │   ├── sse_agent_client.py             # SSE agent client (LLM picks tools over HTTP)
 │   ├── pricing_server.py              # Custom MCP: market pricing tools
 │   ├── inventory_server.py            # Custom MCP: inventory + seller constraints
 │   ├── demos/                          # Standalone deep-dive demos (handshake, tool loop, primitives, content types, HTTP transport)
-│   ├── exercises/                      # Hands-on coding exercises for Module 1
-│   ├── solution/                       # Worked solutions for Module 1 exercises
+│   ├── exercises/                      # Hands-on coding exercises for Demo 1
+│   ├── solution/                       # Worked solutions for Demo 1 exercises
 │   └── notes/
 │       └── mcp_deep_dive.md           # Reference: MCP protocol deep dive
 │
-├── m2_adk_multiagents/                # MODULE 2 — Google ADK + A2A protocol
+├── d2_adk_multiagents/                # DEMO 2 — Google ADK + A2A protocol
 │   ├── README.md                      # Module guide for learners
 │   ├── negotiation_agents/            # adk web-launchable agent packages
 │   │   ├── buyer_agent/agent.py         # Buyer LlmAgent + MCPToolset (pricing)
@@ -56,14 +62,13 @@ real-estate-negotiation-simulator/
 │   │   └── negotiation/agent.py         # LoopAgent + SequentialAgent + MCP tools + submit_decision
 │   ├── adk_demos/                      # adk web-launchable demos (d01–d09) + A2A scripts (10–12)
 │   ├── a2a_13_orchestrated_negotiation.py  # A2A multi-round buyer↔seller negotiation
-│   ├── exercises/                      # Hands-on coding exercises for Module 2
-│   ├── solution/                       # Worked solutions for Module 2 exercises
+│   ├── exercises/                      # Hands-on coding exercises for Demo 2
+│   ├── solution/                       # Worked solutions for Demo 2 exercises
 │   └── notes/
 │       ├── a2a_protocols.md           # Reference: A2A protocol deep dive
 │       ├── adk_quick_reference.md     # Reference: ADK API quick reference
 │       └── google_adk_overview.md     # Reference: Google ADK overview
 │
-├── Week 6 _ ... Google ADK.pptx.pdf   # Workshop slide deck (97 slides)
 ├── .env.example                       # Copy to .env and add your API keys
 └── requirements.txt
 ```
@@ -74,15 +79,15 @@ If module files feel overwhelming, start with the README inside each module fold
 
 Modules 1 and 2 ship a `demos/` folder of small, single-purpose, runnable scripts that crack open the protocols on the wire — designed to pair with the `notes/` reference docs. See each module README for the per-demo table:
 
-- [m1_mcp/demos/](m1_mcp/demos/) — MCP handshake, tool loop trace, primitives, content types, Streamable HTTP
-- [m2_adk_multiagents/adk_demos/](m2_adk_multiagents/adk_demos/) — ADK concept demos (basic agent, MCP tools, sessions, sequential, parallel, loop, agent-as-tool, callbacks, event stream) + A2A protocol scripts (wire format, context threading, parts/artifacts)
+- [d1_mcp/demos/](d1_mcp/demos/) — MCP handshake, tool loop trace, primitives, content types, Streamable HTTP
+- [d2_adk_multiagents/adk_demos/](d2_adk_multiagents/adk_demos/) — ADK concept demos (basic agent, MCP tools, sessions, sequential, parallel, loop, agent-as-tool, callbacks, event stream) + A2A protocol scripts (wire format, context threading, parts/artifacts)
 
 ### Notes live inside each module
 
 Each module has a `notes/` subfolder with reference documentation. There are
 two flavors: **demo study notes** (read while running the demos, narrate
 expected output and key observations) and **conceptual deep-dives** (read any
-time after the workshop for the theory and production patterns).
+time afterwards for the theory and production patterns).
 
 Every note has a header block stating its audience, prerequisites, what to
 read before/after it, and a 3-point TL;DR. Open any note — the first thing
@@ -92,14 +97,14 @@ you'll see is whether it's the right one for you right now.
 
 | When | Read | Why |
 |---|---|---|
-| **While running M1 demos** | [`m1_mcp/notes/M1_DEMO_STUDY_NOTES.md`](m1_mcp/notes/M1_DEMO_STUDY_NOTES.md) | Per-demo narration of all 5 MCP demos plus the GitHub + SSE clients |
-| **After M1** | [`m1_mcp/notes/mcp_deep_dive.md`](m1_mcp/notes/mcp_deep_dive.md) | Full MCP protocol reference — primitives, transports, design patterns |
-| **While running M2 demos** | [`m2_adk_multiagents/notes/M2_DEMO_STUDY_NOTES.md`](m2_adk_multiagents/notes/M2_DEMO_STUDY_NOTES.md) | Per-demo narration of all 9 ADK demos + the 3 A2A demos + the negotiation system |
-| **After M2 (start here)** | [`m2_adk_multiagents/notes/adk_quick_reference.md`](m2_adk_multiagents/notes/adk_quick_reference.md) | One-page lookup for every ADK + A2A construct |
-| **After M2 (go deep)** | [`m2_adk_multiagents/notes/google_adk_overview.md`](m2_adk_multiagents/notes/google_adk_overview.md) | Full ADK reference — every agent type, callbacks, sessions, event stream |
-| **After M2 (network layer)** | [`m2_adk_multiagents/notes/a2a_protocols.md`](m2_adk_multiagents/notes/a2a_protocols.md) | Full A2A reference — wire format, contextId, parts, artifacts, streaming, production patterns |
+| **While running D1 demos** | [`d1_mcp/notes/D1_DEMO_STUDY_NOTES.md`](d1_mcp/notes/D1_DEMO_STUDY_NOTES.md) | Per-demo narration of all 5 MCP demos plus the GitHub + SSE clients |
+| **After D1** | [`d1_mcp/notes/mcp_deep_dive.md`](d1_mcp/notes/mcp_deep_dive.md) | Full MCP protocol reference — primitives, transports, design patterns |
+| **While running D2 demos** | [`d2_adk_multiagents/notes/D2_DEMO_STUDY_NOTES.md`](d2_adk_multiagents/notes/D2_DEMO_STUDY_NOTES.md) | Per-demo narration of all 9 ADK demos + the 3 A2A demos + the negotiation system |
+| **After D2 (start here)** | [`d2_adk_multiagents/notes/adk_quick_reference.md`](d2_adk_multiagents/notes/adk_quick_reference.md) | One-page lookup for every ADK + A2A construct |
+| **After D2 (go deep)** | [`d2_adk_multiagents/notes/google_adk_overview.md`](d2_adk_multiagents/notes/google_adk_overview.md) | Full ADK reference — every agent type, callbacks, sessions, event stream |
+| **After D2 (network layer)** | [`d2_adk_multiagents/notes/a2a_protocols.md`](d2_adk_multiagents/notes/a2a_protocols.md) | Full A2A reference — wire format, contextId, parts, artifacts, streaming, production patterns |
 
-Module 2 has three notes because it spans two distinct topics: the A2A protocol standard and the ADK runtime. Read `adk_quick_reference.md` first to get the construct names in your head; reach for the other two when you need depth on a specific construct.
+Demo 2 has three notes because it spans two distinct topics: the A2A protocol standard and the ADK runtime. Read `adk_quick_reference.md` first to get the construct names in your head; reach for the other two when you need depth on a specific construct.
 
 ---
 
@@ -108,7 +113,7 @@ Module 2 has three notes because it spans two distinct topics: the A2A protocol 
 ### 1. Prerequisites
 
 - Python 3.10+
-- Node.js 18+ (for GitHub MCP demo in Module 1 only)
+- Node.js 18+ (for GitHub MCP demo in Demo 1 only)
 
 **Verify installation:**
 ```bash
@@ -178,87 +183,95 @@ cp .env.example .env
 Then edit `.env` and set:
 ```env
 OPENAI_API_KEY=sk-your-key-here
-GITHUB_TOKEN=ghp-your-token-here   # Optional — Module 1 GitHub demo only
+GITHUB_TOKEN=ghp-your-token-here   # optional, one demo only
 ```
+
+`GITHUB_TOKEN` is a **Personal Access Token on your own GitHub account**, used by
+exactly one demo (`d1_mcp/github_agent_client.py`). Create one at
+<https://github.com/settings/tokens> with the `public_repo` scope —
+[`d1_mcp/README.md`](d1_mcp/README.md) has the step-by-step. Everything else here runs
+without it.
 
 ### 7. Run a smoke test
 
 ```bash
 # Smoke test — run the MCP pricing server standalone
-python m1_mcp/pricing_server.py
+python d1_mcp/pricing_server.py
 ```
 
 If it runs cleanly, your Python environment is ready.
 
-### 8. Run the Workshop Modules in Order
+### 8. Run the demos in order
 
 ```bash
-# MODULE 1: MCP protocol
-python m1_mcp/github_agent_client.py      # GitHub MCP agent (needs GITHUB_TOKEN + OPENAI_API_KEY)
-python m1_mcp/pricing_server.py           # Run MCP server standalone (stdio)
-python m1_mcp/pricing_server.py --sse --port 8001  # SSE transport mode
+# DEMO 1: MCP protocol
+python d1_mcp/github_agent_client.py      # GitHub MCP agent (needs GITHUB_TOKEN + OPENAI_API_KEY)
+python d1_mcp/pricing_server.py           # Run MCP server standalone (stdio)
+python d1_mcp/pricing_server.py --sse --port 8001  # SSE transport mode
 # MCP deep-dive demos (no API key needed unless noted):
-python m1_mcp/demos/01_initialize_handshake.py
-python m1_mcp/demos/02_tool_loop_trace.py
-python m1_mcp/demos/03_list_all_primitives.py
-python m1_mcp/demos/04_content_types.py
-python m1_mcp/demos/05_streamable_http_transport.py
+python d1_mcp/demos/01_initialize_handshake.py
+python d1_mcp/demos/02_tool_loop_trace.py
+python d1_mcp/demos/03_list_all_primitives.py
+python d1_mcp/demos/04_content_types.py
+python d1_mcp/demos/05_streamable_http_transport.py
 
-# MODULE 2: Google ADK + A2A protocol (needs OPENAI_API_KEY)
-adk web m2_adk_multiagents/adk_demos/               # ADK demos d01–d09 in dropdown
-adk web m2_adk_multiagents/negotiation_agents/       # buyer, seller, negotiation in dropdown
-adk web --a2a m2_adk_multiagents/negotiation_agents/ # same + A2A endpoints + Agent Cards
+# DEMO 2: Google ADK + A2A protocol (needs OPENAI_API_KEY)
+adk web d2_adk_multiagents/adk_demos/               # ADK demos d01–d09 in dropdown
+adk web d2_adk_multiagents/negotiation_agents/       # buyer, seller, negotiation in dropdown
+adk web --a2a d2_adk_multiagents/negotiation_agents/ # same + A2A endpoints + Agent Cards
 # A2A protocol demos (run in a second terminal against adk web --a2a):
-python m2_adk_multiagents/adk_demos/a2a_10_wire_lifecycle.py --seller-url http://127.0.0.1:8000/a2a/seller_agent
-python m2_adk_multiagents/adk_demos/a2a_11_context_threading.py --seller-url http://127.0.0.1:8000/a2a/seller_agent
-python m2_adk_multiagents/adk_demos/a2a_12_parts_and_artifacts.py --seller-url http://127.0.0.1:8000/a2a/seller_agent
+python d2_adk_multiagents/adk_demos/a2a_10_wire_lifecycle.py --seller-url http://127.0.0.1:8000/a2a/seller_agent
+python d2_adk_multiagents/adk_demos/a2a_11_context_threading.py --seller-url http://127.0.0.1:8000/a2a/seller_agent
+python d2_adk_multiagents/adk_demos/a2a_12_parts_and_artifacts.py --seller-url http://127.0.0.1:8000/a2a/seller_agent
 # A2A orchestrated negotiation (buyer ↔ seller via Agent Cards):
-python m2_adk_multiagents/a2a_13_orchestrated_negotiation.py
+python d2_adk_multiagents/a2a_13_orchestrated_negotiation.py
 ```
 
-### 9. Module Exercises
+### 9. Exercises
 
-Module 1 and Module 2 ship hands-on exercises with complete, runnable solutions. **These are designed for the 2-hour follow-up review session** held a few days after the workshop — students attempt them as homework, the instructor walks through each solution and runs it live in class.
+Both demos ship hands-on exercises with complete, runnable solutions. They are optional practice — work through them on your own to go deeper, and check your answer against the worked solution in the matching `solution/` folder.
 
-| Module | Exercise | Difficulty | Task |
+| Demo | Exercise | Difficulty | Task |
 |---|---|---|---|
-| M1 | `ex01_walk_score_tool.md` | `[Starter]` | Add a `get_walk_score` tool to the pricing server; watch the LLM auto-discover and use it |
-| M1 | `ex02_multi_server_agent.md` | `[Core]` | Build an `LlmAgent` that connects to both pricing + inventory MCP servers from scratch |
-| M2 | `ex01_budget_cap_callback.md` | `[Starter]` | Write a `before_tool_callback` that blocks `submit_decision` calls with `price > $460,000` |
-| M2 | `ex02_stuck_detection.md` | `[Core]` | Modify the orchestrator to track offer history and escalate early when rounds stall |
-| M2 | `ex03_a2a_multiround_client.md` | `[Core]` | Write an A2A client that drives buyer ↔ seller via `message/send` with `contextId` threading |
-| M2 | `ex04_mediator_agent.md` | `[Core]` | Build a mediator that wraps buyer + seller as `AgentTool`s and proposes a midpoint |
-| M2 | `ex05_prompt_injection_defense.md` | `[Core]` | Add a `before_model_callback` to detect and redact prompt injection attempts |
-| M2 | `ex06_human_in_the_loop.md` | `[Core]` | Add a human-approval checkpoint with three-tier governance: auto-approve, checkpoint, block |
-| M2 | `ex07_parallel_negotiation.md` | `[Stretch]` | Negotiate with two sellers in parallel using `ParallelAgent`, then pick the best deal |
-| M2 | `ex08_shared_market_intel.md` | `[Core]` | Use `app:` state as shared market intelligence — cache pricing lookups for all agents |
-| M2 | `ex09_adaptive_strategy.md` | `[Stretch]` | Episodic memory + strategy advisor `AgentTool` that analyses concession patterns |
+| D1 | `ex01_walk_score_tool.md` | `[Starter]` | Add a `get_walk_score` tool to the pricing server; watch the LLM auto-discover and use it |
+| D1 | `ex02_multi_server_agent.md` | `[Core]` | Build an `LlmAgent` that connects to both pricing + inventory MCP servers from scratch |
+| D2 | `ex01_budget_cap_callback.md` | `[Starter]` | Write a `before_tool_callback` that blocks `submit_decision` calls with `price > $460,000` |
+| D2 | `ex02_stuck_detection.md` | `[Core]` | Modify the orchestrator to track offer history and escalate early when rounds stall |
+| D2 | `ex03_a2a_multiround_client.md` | `[Core]` | Write an A2A client that drives buyer ↔ seller via `message/send` with `contextId` threading |
+| D2 | `ex04_mediator_agent.md` | `[Core]` | Build a mediator that wraps buyer + seller as `AgentTool`s and proposes a midpoint |
+| D2 | `ex05_prompt_injection_defense.md` | `[Core]` | Add a `before_model_callback` to detect and redact prompt injection attempts |
+| D2 | `ex06_human_in_the_loop.md` | `[Core]` | Add a human-approval checkpoint with three-tier governance: auto-approve, checkpoint, block |
+| D2 | `ex07_parallel_negotiation.md` | `[Stretch]` | Negotiate with two sellers in parallel using `ParallelAgent`, then pick the best deal |
+| D2 | `ex08_shared_market_intel.md` | `[Core]` | Use `app:` state as shared market intelligence — cache pricing lookups for all agents |
+| D2 | `ex09_adaptive_strategy.md` | `[Stretch]` | Episodic memory + strategy advisor `AgentTool` that analyses concession patterns |
 
-Each solution lives in its module's `solution/` folder as a self-contained, runnable package — `agent.py` files you can launch directly with `adk web`, or scripts you can run with `python`. The instructor walks through each solution live during the review session.
+Each solution lives in its demo's `solution/` folder as a self-contained, runnable
+package — `agent.py` files you can launch directly with `adk web`, or scripts you can
+run with `python`.
 
 ---
 
-## Module Run Reference
+## Demo Run Reference
 
-One-line summary of every runnable file in the workshop, grouped by module. Use this as a quick lookup or as slide content.
+One-line summary of every runnable file in this project, grouped by module. Use this as a quick lookup or as slide content.
 
-### Module 1 — MCP (give agents real tools)
+### Demo 1 — MCP (give agents real tools)
 
 | # | Run | What it means (one line) |
 |---|---|---|
-| 1 | `python m1_mcp/github_agent_client.py` | LLM agent talks to **GitHub's official MCP server** over `stdio` — proves the ReAct tool-loop on a familiar API. |
-| 2 | `python m1_mcp/pricing_server.py` *(or `--sse --port 8001`)* | Custom MCP server exposing `get_market_price` + `calculate_discount` — the buyer/seller's source of market data. |
-| 3 | `python m1_mcp/inventory_server.py` *(or `--sse --port 8002`)* | Custom MCP server with `get_inventory_level` (public) + `get_minimum_acceptable_price` (seller-only) — demonstrates **information asymmetry**. |
-| 4 | `python m1_mcp/sse_agent_client.py` *(after starting servers in SSE mode)* | Same agent loop as the GitHub client, but over **HTTP/SSE** — proves the transport is irrelevant. |
-| 5 | `python m1_mcp/demos/01_initialize_handshake.py` | Raw JSON-RPC frames of the MCP `initialize` handshake — see the protocol on the wire, no SDK. |
-| 6 | `python m1_mcp/demos/02_tool_loop_trace.py` | Full **model ↔ host ↔ server** tool-calling loop, narrated step-by-step with timestamps. |
-| 7 | `python m1_mcp/demos/03_list_all_primitives.py` | Lists **Tools, Resources, and Prompts** from both servers — proves MCP carries more than just tools. |
-| 8 | `python m1_mcp/demos/04_content_types.py` | Inline server returning each Content block kind (text / image / embedded resource) so you see the JSON shapes. |
-| 9 | `python m1_mcp/demos/05_streamable_http_transport.py --serve` *(then `--client`)* | Same MCP protocol over **Streamable HTTP** — the spec's recommended replacement for raw SSE. |
+| 1 | `python d1_mcp/github_agent_client.py` | LLM agent talks to **GitHub's official MCP server** over `stdio` — proves the ReAct tool-loop on a familiar API. |
+| 2 | `python d1_mcp/pricing_server.py` *(or `--sse --port 8001`)* | Custom MCP server exposing `get_market_price` + `calculate_discount` — the buyer/seller's source of market data. |
+| 3 | `python d1_mcp/inventory_server.py` *(or `--sse --port 8002`)* | Custom MCP server with `get_inventory_level` (public) + `get_minimum_acceptable_price` (seller-only) — demonstrates **information asymmetry**. |
+| 4 | `python d1_mcp/sse_agent_client.py` *(after starting servers in SSE mode)* | Same agent loop as the GitHub client, but over **HTTP/SSE** — proves the transport is irrelevant. |
+| 5 | `python d1_mcp/demos/01_initialize_handshake.py` | Raw JSON-RPC frames of the MCP `initialize` handshake — see the protocol on the wire, no SDK. |
+| 6 | `python d1_mcp/demos/02_tool_loop_trace.py` | Full **model ↔ host ↔ server** tool-calling loop, narrated step-by-step with timestamps. |
+| 7 | `python d1_mcp/demos/03_list_all_primitives.py` | Lists **Tools, Resources, and Prompts** from both servers — proves MCP carries more than just tools. |
+| 8 | `python d1_mcp/demos/04_content_types.py` | Inline server returning each Content block kind (text / image / embedded resource) so you see the JSON shapes. |
+| 9 | `python d1_mcp/demos/05_streamable_http_transport.py --serve` *(then `--client`)* | Same MCP protocol over **Streamable HTTP** — the spec's recommended replacement for raw SSE. |
 
-### Module 2 — Google ADK + A2A (multi-agent orchestration)
+### Demo 2 — Google ADK + A2A (multi-agent orchestration)
 
-**ADK demos — interactive Web UI** (`adk web m2_adk_multiagents/adk_demos/`)
+**ADK demos — interactive Web UI** (`adk web d2_adk_multiagents/adk_demos/`)
 
 | # | Pick from dropdown | What it means (one line) |
 |---|---|---|
@@ -272,16 +285,16 @@ One-line summary of every runnable file in the workshop, grouped by module. Use 
 | d08 | `d08_callbacks` | `before_model` / `before_tool` / `after_tool` hooks — PII redaction, allowlists, logging. |
 | d09 | `d09_event_stream` | Inspect ADK's raw event stream — tool calls, state deltas, final-response markers. |
 
-**A2A protocol demos — terminal scripts** (start `adk web --a2a m2_adk_multiagents/negotiation_agents/` first)
+**A2A protocol demos — terminal scripts** (start `adk web --a2a d2_adk_multiagents/negotiation_agents/` first)
 
 | # | Run | What it means (one line) |
 |---|---|---|
-| 10 | `python m2_adk_multiagents/adk_demos/a2a_10_wire_lifecycle.py --seller-url …/a2a/seller_agent` | Hand-crafted JSON-RPC `message/send` — see Agent Card discovery and task-state transitions. |
-| 11 | `python m2_adk_multiagents/adk_demos/a2a_11_context_threading.py --seller-url …/a2a/seller_agent` | Reuse `contextId` across rounds — multiple A2A calls become **one threaded conversation**. |
-| 12 | `python m2_adk_multiagents/adk_demos/a2a_12_parts_and_artifacts.py --seller-url …/a2a/seller_agent` | Multi-part Messages (`TextPart` + `DataPart`) and inspecting Artifacts returned by the agent. |
-| 13 | `python m2_adk_multiagents/a2a_13_orchestrated_negotiation.py` | Full **buyer ↔ seller multi-round negotiation** over A2A — Agent Card discovery + threaded `message/send`. |
+| 10 | `python d2_adk_multiagents/adk_demos/a2a_10_wire_lifecycle.py --seller-url …/a2a/seller_agent` | Hand-crafted JSON-RPC `message/send` — see Agent Card discovery and task-state transitions. |
+| 11 | `python d2_adk_multiagents/adk_demos/a2a_11_context_threading.py --seller-url …/a2a/seller_agent` | Reuse `contextId` across rounds — multiple A2A calls become **one threaded conversation**. |
+| 12 | `python d2_adk_multiagents/adk_demos/a2a_12_parts_and_artifacts.py --seller-url …/a2a/seller_agent` | Multi-part Messages (`TextPart` + `DataPart`) and inspecting Artifacts returned by the agent. |
+| 13 | `python d2_adk_multiagents/a2a_13_orchestrated_negotiation.py` | Full **buyer ↔ seller multi-round negotiation** over A2A — Agent Card discovery + threaded `message/send`. |
 
-**Negotiation agents — interactive Web UI** (`adk web m2_adk_multiagents/negotiation_agents/`)
+**Negotiation agents — interactive Web UI** (`adk web d2_adk_multiagents/negotiation_agents/`)
 
 | Pick from dropdown | What it means (one line) |
 |---|---|
@@ -296,16 +309,16 @@ One-line summary of every runnable file in the workshop, grouped by module. Use 
 ### ADK + A2A Flow
 
 ```
-adk web --a2a m2_adk_multiagents/negotiation_agents/
+adk web --a2a d2_adk_multiagents/negotiation_agents/
     │
     ├── buyer_agent (negotiation_agents/buyer_agent/agent.py)
     │     ├── root_agent = LlmAgent(model=AGENT_MODEL)  # default: openai/gpt-4o
-    │     └── MCPToolset → m1_mcp/pricing_server.py
+    │     └── MCPToolset → d1_mcp/pricing_server.py
     │
     ├── seller_agent (negotiation_agents/seller_agent/agent.py)
     │     ├── root_agent = LlmAgent(model=AGENT_MODEL)  # default: openai/gpt-4o
-    │     ├── MCPToolset → m1_mcp/pricing_server.py
-    │     └── MCPToolset → m1_mcp/inventory_server.py (seller ONLY)
+    │     ├── MCPToolset → d1_mcp/pricing_server.py
+    │     └── MCPToolset → d1_mcp/inventory_server.py (seller ONLY)
     │
     └── negotiation (negotiation_agents/negotiation/agent.py)
           └── root_agent = LoopAgent(sub_agents=[SequentialAgent(buyer, seller)])
@@ -347,18 +360,16 @@ Round 3: BUYER ◄──[ACCEPT: $449,000]────────────�
 
 ---
 
-## Workshop Schedule (4 Hours)
+## The order to work through it
 
-The full 97-slide deck ships as a PDF in the repo root.
-
-| Time | Module | Topic | Key Files |
+| Step | Demo | Topic | Where |
 |---|---|---|---|
-| 0:00–0:15 | Intro | What we're building | `README.md` |
-| 0:15–1:00 | M1 | MCP with GitHub | `m1_mcp/github_agent_client.py` |
-| 1:30–2:15 | M1 | MCP deep dive: protocol, primitives, transports, custom servers | `m1_mcp/notes/mcp_deep_dive.md`, `m1_mcp/pricing_server.py` |
-| 2:15–3:00 | M2 | Google ADK deep dive: LlmAgent, workflow agents, sessions, callbacks | `adk web m2_adk_multiagents/adk_demos/` |
-| 3:00–3:50 | M2 | A2A protocol: Agent Card, JSON-RPC, task lifecycle | `adk web --a2a m2_adk_multiagents/negotiation_agents/` |
-| 3:50–4:00 | Wrap | Q&A + preview of follow-up exercise session | `m1_mcp/exercises/`, `m2_adk_multiagents/exercises/` |
+| 1 | — | What you are building | this file, then [`SETUP.md`](SETUP.md) |
+| 2 | D1 | MCP against a real service | `d1_mcp/github_agent_client.py` |
+| 3 | D1 | The protocol itself: primitives, transports, custom servers | `d1_mcp/demos/`, `d1_mcp/notes/mcp_deep_dive.md` |
+| 4 | D2 | Google ADK: LlmAgent, workflow agents, sessions, callbacks | `adk web d2_adk_multiagents/adk_demos/` |
+| 5 | D2 | A2A: Agent Card, JSON-RPC, task lifecycle | `adk web --a2a d2_adk_multiagents/negotiation_agents/` |
+| 6 | — | Optional practice | `d1_mcp/exercises/`, `d2_adk_multiagents/exercises/` |
 
 ---
 
@@ -380,16 +391,16 @@ async def inspect_server(script: str):
             for t in tools.tools:
                 print(f"  • {t.name}: {t.description[:60]}")
 
-asyncio.run(inspect_server("m1_mcp/pricing_server.py"))
-asyncio.run(inspect_server("m1_mcp/inventory_server.py"))
+asyncio.run(inspect_server("d1_mcp/pricing_server.py"))
+asyncio.run(inspect_server("d1_mcp/inventory_server.py"))
 ```
 
 ### SSE Mode (Multiple Clients)
 
 ```bash
 # Terminal 1 — start servers
-python m1_mcp/pricing_server.py --sse --port 8001
-python m1_mcp/inventory_server.py --sse --port 8002
+python d1_mcp/pricing_server.py --sse --port 8001
+python d1_mcp/inventory_server.py --sse --port 8002
 
 # Terminal 2 — connect to SSE server
 python -c "
@@ -412,7 +423,7 @@ asyncio.run(test())
 
 ### Change the Property
 
-Edit these values in `m2_adk_multiagents/negotiation_agents/buyer_agent/agent.py` and `seller_agent/agent.py`:
+Edit these values in `d2_adk_multiagents/negotiation_agents/buyer_agent/agent.py` and `seller_agent/agent.py`:
 
 ```python
 PROPERTY_ADDRESS = "1234 Oak Street, Dallas, TX 75201"
@@ -421,11 +432,11 @@ BUYER_BUDGET = 495_000
 MINIMUM_PRICE = 475_000
 ```
 
-Add the property to `m1_mcp/pricing_server.py`'s `PROPERTY_DATABASE`.
+Add the property to `d1_mcp/pricing_server.py`'s `PROPERTY_DATABASE`.
 
 ### Add a New MCP Tool
 
-In `m1_mcp/pricing_server.py`:
+In `d1_mcp/pricing_server.py`:
 
 ```python
 @mcp.tool()
@@ -441,7 +452,7 @@ def get_neighborhood_score(zip_code: str) -> dict:
 
 ### Change Negotiation Strategy
 
-In `m2_adk_multiagents/negotiation_agents/buyer_agent/agent.py`, modify the `instruction` string:
+In `d2_adk_multiagents/negotiation_agents/buyer_agent/agent.py`, modify the `instruction` string:
 
 ```python
 # Change from "start 12% below asking" to "start 8% below"
@@ -458,11 +469,11 @@ Use ADK's workflow agents — wrap buyer, mediator, and seller as `sub_agents` o
 
 | File | Key Element | What It Does |
 |---|---|---|
-| `m1_mcp/pricing_server.py` | `get_market_price`, `calculate_discount` | MCP pricing tools |
-| `m1_mcp/inventory_server.py` | `get_inventory_level`, `get_minimum_acceptable_price` | MCP inventory tools |
-| `m2_adk_multiagents/negotiation_agents/buyer_agent/agent.py` | `root_agent = LlmAgent(...)` | Buyer agent with MCPToolset |
-| `m2_adk_multiagents/negotiation_agents/seller_agent/agent.py` | `root_agent = LlmAgent(...)` | Seller agent with dual MCPToolsets |
-| `m2_adk_multiagents/negotiation_agents/negotiation/agent.py` | `root_agent = LoopAgent(...)` | LoopAgent + SequentialAgent + MCP tools + submit_decision |
+| `d1_mcp/pricing_server.py` | `get_market_price`, `calculate_discount` | MCP pricing tools |
+| `d1_mcp/inventory_server.py` | `get_inventory_level`, `get_minimum_acceptable_price` | MCP inventory tools |
+| `d2_adk_multiagents/negotiation_agents/buyer_agent/agent.py` | `root_agent = LlmAgent(...)` | Buyer agent with MCPToolset |
+| `d2_adk_multiagents/negotiation_agents/seller_agent/agent.py` | `root_agent = LlmAgent(...)` | Seller agent with dual MCPToolsets |
+| `d2_adk_multiagents/negotiation_agents/negotiation/agent.py` | `root_agent = LoopAgent(...)` | LoopAgent + SequentialAgent + MCP tools + submit_decision |
 
 ---
 
@@ -487,7 +498,7 @@ export OPENAI_API_KEY=sk-your-actual-key
 ```bash
 # Run from the real-estate-negotiation-simulator/ directory
 cd real-estate-negotiation-simulator
-python m1_mcp/pricing_server.py  # Not: python real-estate-negotiation-simulator/m1_mcp/pricing_server.py
+python d1_mcp/pricing_server.py  # Not: python real-estate-negotiation-simulator/d1_mcp/pricing_server.py
 ```
 
 **GitHub MCP demo fails with `command not found: npx`**
@@ -506,10 +517,10 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\.venv\Scripts\Acti
 # Set UTF-8 mode before running any script
 $env:PYTHONUTF8 = "1"
 $env:PYTHONIOENCODING = "utf-8"
-adk web m2_adk_multiagents/negotiation_agents/
+adk web d2_adk_multiagents/negotiation_agents/
 ```
 Or add `PYTHONUTF8=1` to your `.env` file to make it permanent.
 
 ---
 
-*Built for the AI Agent Systems Workshop — teaching MCP, A2A, and Google ADK through a real estate negotiation simulator.*
+*Built for the AI Agent Systems Project — teaching MCP, A2A, and Google ADK through a real estate negotiation simulator.*
