@@ -155,7 +155,25 @@ adk web adk_demos
 Open **http://localhost:8000**.
 
 **Checkpoint:** a dropdown listing nine agents, `d01_basic_agent` through
-`d09_event_stream`. Pick `d01_basic_agent`, say hello, get a reply.
+`d09_event_stream`. Pick `d01_basic_agent` and ask it:
+
+```
+What is 742 Evergreen Terrace, Austin TX worth?
+```
+
+You should get an estimate of **$462,000** with **high** confidence, and a
+`get_quick_estimate` tool call in the Events panel.
+
+**Ask it something with an address in it.** A bare "hello" gets a polite greeting and
+nothing else, because the agent has one tool and no address to look it up with. That
+is correct behaviour, but it does not show you anything. If you would rather build up
+to it, "I want to buy a flat" works too — the agent will ask for an address, and you
+give it the one above.
+
+The tool only recognises **742 Evergreen Terrace** and **123 Main St**. Any other
+address returns a low-confidence fallback, which is worth knowing before you decide
+the demo is broken. 742 Evergreen Terrace is the property the whole day is about, and
+$462,000 is the market figure the buyer agent uses later in the negotiation.
 
 If the dropdown is empty, you are in the wrong directory — `adk web` needs the folder
 *containing* the agent packages, not one of the packages.

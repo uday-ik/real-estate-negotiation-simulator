@@ -192,6 +192,16 @@ one line each — this is a tour, not nine deep dives.
 | d08 | Callbacks | Allowlists and redaction the model cannot bypass |
 | d09 | The event stream | What the Runner actually emits, event by event |
 
+**Give d01 an address, not a greeting.** Ask it *"What is 742 Evergreen Terrace,
+Austin TX worth?"* and you get $462,000 at high confidence, with the tool call visible
+in the Events panel. A bare "hello" just gets a greeting back, because the agent has
+one tool and nothing to look up — correct, but it shows the room nothing. The tool only
+knows 742 Evergreen Terrace and 123 Main St; anything else returns a low-confidence
+fallback.
+
+That $462,000 is the same market figure the buyer agent leans on later in the
+negotiation, so it is worth naming when it appears.
+
 **Three of these carry the rest of the session** — `d02`, `d06` and `d08`. The full
 negotiation is those three composed: MCP tools, a bounded loop, and a callback that
 enforces policy. If the room is flagging, move quickly through the others and spend
